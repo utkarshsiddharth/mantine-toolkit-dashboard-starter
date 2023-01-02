@@ -16,7 +16,16 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@mantine/core": "^5.9.6",
+    "@mantine/hooks": "^5.9.6",
     "@material-tailwind/react": "^1.2.4",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@tabler/icons": "^1.119.0",
+    "flowbite": "^1.5.5",
+    "flowbite-react": "^0.3.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.5.0"

@@ -16,7 +16,6 @@
     "prettier/prettier": [
       "warn",
       {
-        "singleQuote": true,
         "endOfLine": "auto"
       }
     ]
@@ -40,10 +39,10 @@
         "project": "./tsconfig.json"
       },
       "rules": {
+        "no-return-assign": "off",
         "prettier/prettier": [
-          "error",
+          "warn",
           {
-            "singleQuote": true,
             "endOfLine": "auto"
           }
         ],
