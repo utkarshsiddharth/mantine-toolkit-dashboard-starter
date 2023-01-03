@@ -19,6 +19,7 @@
     "@emotion/react": "^11.10.5",
     "@mantine/core": "^5.9.6",
     "@mantine/hooks": "^5.9.6",
+    "@mantine/utils": "^5.10.0",
     "@material-tailwind/react": "^1.2.4",
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",

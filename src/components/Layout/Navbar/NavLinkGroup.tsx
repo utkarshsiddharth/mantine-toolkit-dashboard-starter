@@ -3,17 +3,14 @@ import {
   Collapse,
   createStyles,
   Group,
-  Text,
   ThemeIcon,
   UnstyledButton
 } from '@mantine/core'
-import type { TablerIcon } from '@tabler/icons'
-import {
-  IconCalendarStats,
-  IconChevronLeft,
-  IconChevronRight
-} from '@tabler/icons'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import type { NavLinkType } from '@/types/component.types'
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -63,38 +60,33 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-interface LinksGroupProps {
-  icon: TablerIcon
-  label: string
-  initiallyOpened?: boolean
-  links?: { label: string; link: string }[]
-}
-
 export default function LinksGroup({
   icon: Icon,
   label,
   initiallyOpened,
-  links
-}: LinksGroupProps) {
+  links,
+  link
+}: NavLinkType) {
   const { classes, theme } = useStyles()
   const hasLinks = Array.isArray(links)
   const [opened, setOpened] = useState(initiallyOpened || false)
   const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
-  const items = (hasLinks ? links : []).map((link) => (
-    <Text<'a'>
-      component="a"
+  const items = (hasLinks ? links : []).map((elLink) => (
+    <UnstyledButton
+      component={Link}
       className={classes.link}
-      href={link.link}
-      key={link.label}
-      onClick={(event) => event.preventDefault()}
+      to={elLink.link}
+      key={elLink.label}
     >
-      {link.label}
-    </Text>
+      {elLink.label}
+    </UnstyledButton>
   ))
 
   return (
     <>
       <UnstyledButton
+        component={Link}
+        to={link || ''}
         onClick={() => setOpened((o) => !o)}
         className={classes.control}
       >
@@ -103,6 +95,7 @@ export default function LinksGroup({
             <ThemeIcon variant="light" size={30}>
               <Icon size={18} />
             </ThemeIcon>
+
             <Box ml="md">{label}</Box>
           </Box>
           {hasLinks && (
@@ -124,17 +117,11 @@ export default function LinksGroup({
   )
 }
 
-const mockdata = {
-  label: 'Releases',
-  icon: IconCalendarStats,
-  links: [
-    { label: 'Upcoming releases', link: '/' },
-    { label: 'Previous releases', link: '/' },
-    { label: 'Releases schedule', link: '/' }
-  ]
+type NavbarLinkGroupType = {
+  data: NavLinkType
 }
 
-export function NavbarLinksGroup() {
+export function NavbarLinksGroup({ data }: NavbarLinkGroupType) {
   return (
     <Box
       sx={(theme) => ({
@@ -144,7 +131,7 @@ export function NavbarLinksGroup() {
           theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white
       })}
     >
-      <LinksGroup {...mockdata} />
+      <LinksGroup {...data} />
     </Box>
   )
 }

@@ -19,3 +19,26 @@ export type StatItemType = {
 export type StatsRingProps = {
   data: StatItemType[]
 }
+
+export type NavLinkItemType = {
+  label: string
+  link: string
+}
+
+export type NavLinkType = {
+  label: string
+  icon: any
+  link?: string
+  initiallyOpened?: boolean
+  links?: NavLinkItemType[]
+}
+
+export type OrderRowType = {
+  orderId: string
+  user: string
+  paymentMode: 'cod' | 'online'
+  paymentId?: string
+  orderAmount: number
+  orderCurrency: 'INR'
+  orderStatus: 'pending' | 'processing' | 'dispached' | 'arrived' | 'failed'
+}

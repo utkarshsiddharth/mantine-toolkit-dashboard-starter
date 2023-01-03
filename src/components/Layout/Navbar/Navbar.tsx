@@ -1,54 +1,10 @@
 import { createStyles, Navbar, ScrollArea } from '@mantine/core'
-import {
-  IconAdjustments,
-  IconCalendarStats,
-  IconFileAnalytics,
-  IconGauge,
-  IconLock,
-  IconNotes,
-  IconPresentationAnalytics
-} from '@tabler/icons'
 
 import { ToggleButton } from '@/components/common'
+import { navData } from '@/data/navData'
 
 import LinksGroup from './NavLinkGroup'
 import { UserButton } from './UserButton'
-
-const mockdata = [
-  { label: 'Dashboard', icon: IconGauge },
-  {
-    label: 'Market news',
-    icon: IconNotes,
-    initiallyOpened: true,
-    links: [
-      { label: 'Overview', link: '/' },
-      { label: 'Forecasts', link: '/' },
-      { label: 'Outlook', link: '/' },
-      { label: 'Real time', link: '/' }
-    ]
-  },
-  {
-    label: 'Releases',
-    icon: IconCalendarStats,
-    links: [
-      { label: 'Upcoming releases', link: '/' },
-      { label: 'Previous releases', link: '/' },
-      { label: 'Releases schedule', link: '/' }
-    ]
-  },
-  { label: 'Analytics', icon: IconPresentationAnalytics },
-  { label: 'Contracts', icon: IconFileAnalytics },
-  { label: 'Settings', icon: IconAdjustments },
-  {
-    label: 'Security',
-    icon: IconLock,
-    links: [
-      { label: 'Enable 2FA', link: '/' },
-      { label: 'Change password', link: '/' },
-      { label: 'Recovery codes', link: '/' }
-    ]
-  }
-]
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -89,9 +45,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function NavigationBar() {
   const { classes } = useStyles()
-  const links = mockdata.map((item) => (
-    <LinksGroup {...item} key={item.label} />
-  ))
+  const links = navData.map((item) => <LinksGroup {...item} key={item.label} />)
 
   return (
     <Navbar width={{ sm: 300 }} p="md" className={classes.navbar}>

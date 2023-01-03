@@ -1,11 +1,18 @@
 import type { ColorScheme } from '@mantine/core'
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
-import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/Layout/Layout'
-import { About, Home, NotFound } from '@/screens'
+import {
+  About,
+  Dashboard,
+  NotFound,
+  Orders,
+  Payments,
+  ProductAnalytics,
+  Users
+} from '@/screens'
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -31,8 +38,12 @@ function App() {
         <Router>
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/product/analytics" element={<ProductAnalytics />} />
+              <Route path="/users" element={<About />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/payments" element={<Payments />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
