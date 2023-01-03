@@ -1,32 +1,43 @@
-import { Stack, Title } from '@mantine/core'
-import React from 'react'
+import { AppShell, Navbar, useMantineTheme } from '@mantine/core'
+import { useState } from 'react'
 
-import { ToggleButton } from '@/components/common'
-
-import Navbar from './Navbar/Navbar'
+import FooterBar from './Footer/Footer'
+import HeaderBar from './Header/Header'
+import NavigationBar from './Navbar/Navbar'
 
 type LayoutType = {
   children: React.ReactNode
 }
 
-const Layout: React.FC<LayoutType> = ({ children }) => {
+export default function Layout({ children }: LayoutType) {
+  const theme = useMantineTheme()
+  const [opened, setOpened] = useState(false)
   return (
-    <div className="relative flex">
-      <div className="fixed top-0">
-        <Navbar />
-      </div>
-      <div className="m-8 ml-[100px] flex-1">
-        <div className="flex items-center justify-between">
-          <Stack ml="xl" spacing="xs">
-            <Title order={2}>EcommHub</Title>
-            <p>Your Online Shopping Destination, Now</p>
-          </Stack>
-          <ToggleButton />
-        </div>
-        <div>{children}</div>
-      </div>
-    </div>
+    <AppShell
+      styles={{
+        main: {
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0]
+        }
+      }}
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      navbar={
+        <Navbar
+          p="md"
+          hiddenBreakpoint="sm"
+          hidden={!opened}
+          width={{ sm: 200, lg: 300 }}
+        >
+          <NavigationBar />
+        </Navbar>
+      }
+      footer={<FooterBar />}
+      header={<HeaderBar opened={opened} setOpened={setOpened} />}
+    >
+      {children}
+    </AppShell>
   )
 }
-
-export default Layout

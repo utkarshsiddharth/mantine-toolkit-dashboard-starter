@@ -1,4 +1,4 @@
-import { Grid, Stack, Title } from '@mantine/core'
+import { Paper, Stack, Title } from '@mantine/core'
 
 import { StatsGrid } from '@/components/common'
 import { RevenueStatCard, ViewStatBars } from '@/components/common/Cards'
@@ -10,20 +10,21 @@ import { statCards } from '@/utils/data'
 function Home() {
   return (
     <div className="grid">
-      <div className="flex"></div>
       <Stack ml="xl" mt="xl">
         <StatsGrid data={statCards} />
       </Stack>
-      <Grid mt="xl">
-        <Grid.Col span={8}>
+      <div className="my-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
+        <div className="flex-[8]">
           <Stack>
-            <Title ml="xl">Best Selling Categories</Title>
+            <Paper p="sm" ml="xl">
+              <Title ml="xl">Best Selling Brands</Title>
+            </Paper>
             <div className="h-[400px] w-full">
               <RevenueChart data={data} />
             </div>
           </Stack>
-        </Grid.Col>
-        <Grid.Col span={4}>
+        </div>
+        <div className="flex-[4]">
           <Stack mb="xl">
             <ViewStatBars data={viewStats} />
           </Stack>
@@ -53,8 +54,8 @@ function Home() {
               total={'12,434'}
             />
           </Stack>
-        </Grid.Col>
-      </Grid>
+        </div>
+      </div>
     </div>
   )
 }

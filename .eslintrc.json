@@ -13,12 +13,7 @@
   "rules": {
     "react/no-unescaped-entities": 0,
     "no-console": "error",
-    "prettier/prettier": [
-      "warn",
-      {
-        "endOfLine": "auto"
-      }
-    ]
+    "prettier/prettier": ["warn"]
   },
   "overrides": [
     // Configuration for TypeScript files
