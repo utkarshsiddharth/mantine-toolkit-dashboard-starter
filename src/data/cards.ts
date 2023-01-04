@@ -17,3 +17,24 @@ export const viewStats: StatItemType[] = [
     icon: 'up'
   }
 ]
+
+export const websiteViewsData = [
+  {
+    color: '#47D6AB',
+    count: '2,824',
+    label: 'Mobile',
+    part: 70
+  },
+  {
+    color: '#333',
+    count: '1,200',
+    label: 'Tablet',
+    part: 30
+  },
+  {
+    color: '#333',
+    count: '1,200',
+    label: 'Desktop',
+    part: 30
+  }
+]

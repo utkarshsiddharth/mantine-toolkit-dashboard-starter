@@ -22,12 +22,11 @@ export default function Layout({ children }: LayoutType) {
               : theme.colors.gray[0]
         }
       }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
+      navbarOffsetBreakpoint="lg"
       navbar={
         <Navbar
           p="md"
-          hiddenBreakpoint="sm"
+          hiddenBreakpoint="lg"
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >

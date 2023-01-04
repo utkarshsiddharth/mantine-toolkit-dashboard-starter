@@ -1,6 +1,7 @@
 import type { ColorScheme } from '@mantine/core'
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/Layout/Layout'
@@ -13,6 +14,7 @@ import {
   ProductAnalytics,
   Users
 } from '@/screens'
+import { server } from '@/utils/server'
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -25,6 +27,25 @@ function App() {
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
 
   useHotkeys([['mod+J', () => toggleColorScheme()]])
+
+  useEffect(() => {
+    const login = async () => {
+      await server.post(
+        '/users/login',
+        {
+          email: 'crickart@gmail.com',
+          password: '12345678'
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      )
+    }
+    login()
+  }, [])
   return (
     <MantineProvider
       theme={{ colorScheme, primaryColor: 'yellow' }}

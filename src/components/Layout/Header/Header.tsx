@@ -33,7 +33,7 @@ const HeaderBar: React.FC<HeaderBarType> = ({ opened, setOpened }) => {
         }}
         src={EcommHub}
       />
-      <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+      <MediaQuery largerThan="lg" styles={{ display: 'none' }}>
         <Burger
           opened={opened}
           onClick={() => setOpened((o) => !o)}

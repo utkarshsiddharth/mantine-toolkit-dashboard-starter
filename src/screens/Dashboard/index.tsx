@@ -1,9 +1,10 @@
-import { Paper, Stack, Title } from '@mantine/core'
+import { Box, Flex, Grid, Paper, Stack, Title } from '@mantine/core'
+import { IconBasket, IconCards } from '@tabler/icons'
 
-import { StatsGrid } from '@/components/common'
+import { StatsGrid, TransactionTable } from '@/components/common'
 import { RevenueStatCard, ViewStatBars } from '@/components/common/Cards'
 import { RevenueChart } from '@/components/common/Charts'
-import { viewStats } from '@/data/cards'
+import { viewStats, websiteViewsData } from '@/data/cards'
 import { data } from '@/data/revenue'
 import { statCards } from '@/utils/data'
 
@@ -30,32 +31,36 @@ function Home() {
           </Stack>
           <Stack>
             <RevenueStatCard
-              data={[
-                {
-                  color: '#47D6AB',
-                  count: '2,824',
-                  label: 'Mobile',
-                  part: 70
-                },
-                {
-                  color: '#333',
-                  count: '1,200',
-                  label: 'Tablet',
-                  part: 30
-                },
-                {
-                  color: '#333',
-                  count: '1,200',
-                  label: 'Desktop',
-                  part: 30
-                }
-              ]}
+              data={websiteViewsData}
               diff={844}
               total={'12,434'}
             />
           </Stack>
         </div>
       </div>
+      <Grid>
+        <Grid.Col sm={12} md={6} lg={6}>
+          <Box aria-label="transactions" title="Transactions">
+            <Paper p="xs">
+              <Flex gap="md" align="center">
+                <Title order={2}>Transaction History</Title>
+                <IconCards />
+              </Flex>
+            </Paper>
+            <TransactionTable />
+          </Box>
+        </Grid.Col>
+        <Grid.Col sm={12} md={6} lg={6}>
+          <Box h={100}>
+            <Paper p="xs">
+              <Flex gap="md" align="center">
+                <Title order={2}>Recent Orders</Title>
+                <IconBasket />
+              </Flex>
+            </Paper>
+          </Box>
+        </Grid.Col>
+      </Grid>
     </div>
   )
 }
