@@ -7,7 +7,7 @@ const MyResponsiveLine = ({ data /* see data tab */ }: { data: any }) => {
       data={data}
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: 'point' }}
-      lineWidth={'3px'}
+      lineWidth={3}
       yScale={{
         type: 'linear',
         min: 'auto',
