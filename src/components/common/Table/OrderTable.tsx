@@ -3,7 +3,6 @@ import {
   Center,
   Chip,
   createStyles,
-  Flex,
   Grid,
   Group,
   ScrollArea,
@@ -89,7 +88,7 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
 
 export default function OrderTable({ data }: TableSortProps) {
   const [search, setSearch] = useState('')
-  const [paymentMode, setpaymentMode] = useState('')
+  const [paymentMode, setpaymentMode] = useState('All')
   const [filteredData, setFilteredData] = useState(data)
   const [sortBy, setSortBy] = useState<keyof OrderRowType | null>(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
@@ -120,7 +119,7 @@ export default function OrderTable({ data }: TableSortProps) {
     handleFilter(value)
   }
   const handlePaymentMode = (value: string) => {
-    if (value === '') {
+    if (value === 'All') {
       setFilteredData(data)
       return
     }
@@ -189,15 +188,13 @@ export default function OrderTable({ data }: TableSortProps) {
   return (
     <>
       <Grid align="baseline" justify={'center'}>
-        <Grid.Col span={2}>
+        <Grid.Col sm={12} md={3} lg={3}>
           <Title order={2}>Orders</Title>
         </Grid.Col>
-        <Grid.Col span={'auto'}>
-          <Flex justify="end">
-            <OrderSearch />
-          </Flex>
+        <Grid.Col sm={12} md={6} lg={6}>
+          <OrderSearch />
         </Grid.Col>
-        <Grid.Col span={3}>
+        <Grid.Col sm={12} md={3} lg={3}>
           <Chip.Group
             value={paymentMode}
             onChange={handlePaymentMode}
@@ -206,7 +203,7 @@ export default function OrderTable({ data }: TableSortProps) {
           >
             <Chip value="ONLINE">ONLINE</Chip>
             <Chip value="COD">COD</Chip>
-            <Chip value="">All</Chip>
+            <Chip value="All">All</Chip>
           </Chip.Group>
         </Grid.Col>
       </Grid>

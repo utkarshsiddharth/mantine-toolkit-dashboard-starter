@@ -6,6 +6,7 @@ query {
         user {
           firstName
         }
+        paymentMode
         orderStatus
         orderAmount
         payment {

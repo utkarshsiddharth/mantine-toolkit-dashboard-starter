@@ -1,4 +1,4 @@
-import { CopyButton, Flex, Table, Text, Tooltip } from '@mantine/core'
+import { Badge, CopyButton, Flex, Table, Text, Tooltip } from '@mantine/core'
 import { IconCurrencyRupee } from '@tabler/icons'
 import dayjs from 'dayjs'
 import { useQuery } from 'react-query'
@@ -6,11 +6,14 @@ import { useQuery } from 'react-query'
 import { getTransactionHistory } from '@/graphql/main'
 import { server } from '@/utils/server'
 
-type TransactionElementType = {
+type OrderElementType = {
   name: string
+  status: string
   amount: number
   orderId: string
+  transactionId?: string
   date: string
+  paymentMode: 'online' | 'cod'
 }
 
 const fetchTransactions = async () => {
@@ -20,14 +23,18 @@ const fetchTransactions = async () => {
   const { docs } = res.data.data.Orders
   const rows = docs.map((item: any) => {
     const { firstName } = item.user
-    const orderId = item.payment.orderCreationId
+    const orderId = item.id
+    const { paymentMode } = item
+    const transactionId = item.payment.orderCreationId
     const date = dayjs(item.createdAt).format('MMMM DD, YYYY')
     return {
       name: firstName,
       amount: item.orderAmount,
       orderId,
       status: item.orderStatus,
-      date
+      date,
+      transactionId,
+      paymentMode
     }
   })
   return rows
@@ -35,12 +42,10 @@ const fetchTransactions = async () => {
 
 export default function TransactionHistory() {
   const { data, isLoading, error } = useQuery(
-    'transaction-history',
+    'order-history',
     fetchTransactions,
     {
-      retry: 1,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false
+      refetchOnWindowFocus: false
     }
   )
 
@@ -50,7 +55,8 @@ export default function TransactionHistory() {
   if (error instanceof Error) {
     return <div>{error!.message}</div>
   }
-  const rows = data.map((element: TransactionElementType) => (
+
+  const rows = data.map((element: OrderElementType) => (
     <tr key={element.orderId}>
       <td>
         <Text weight={700} variant="gradient">
@@ -77,12 +83,44 @@ export default function TransactionHistory() {
         </CopyButton>
       </td>
       <td>
+        {element.transactionId ? (
+          <CopyButton value={element.transactionId}>
+            {({ copied, copy }) => (
+              <Tooltip
+                color={copied ? 'teal' : 'blue'}
+                label={`${copied ? 'Copied' : 'Copy'}: ${
+                  element.transactionId
+                }`}
+              >
+                <Text
+                  style={{ cursor: 'pointer' }}
+                  underline
+                  onClick={copy}
+                  color={copied ? 'teal' : 'blue'}
+                >
+                  {`${element.transactionId}`.slice(0, 10)}
+                </Text>
+              </Tooltip>
+            )}
+          </CopyButton>
+        ) : (
+          <Text>-:-</Text>
+        )}
+      </td>
+      <td>
+        <Badge color={element.paymentMode === 'cod' ? 'grape' : 'yellow'}>
+          {element.paymentMode}
+        </Badge>
+      </td>
+      <td>
         <Flex align="center">
           <IconCurrencyRupee size={16} />
           <Text mb={1}>{element.amount}</Text>
         </Flex>
       </td>
-
+      <td>
+        <Badge color={'grape'}>{element.status}</Badge>
+      </td>
       <td>{element.date}</td>
     </tr>
   ))
@@ -92,8 +130,11 @@ export default function TransactionHistory() {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Transaction Id</th>
+          <th>OrderId</th>
+          <th>TransactionId</th>
+          <th>Payment Mode</th>
           <th>Amount</th>
+          <th>Status</th>
           <th>Date</th>
         </tr>
       </thead>

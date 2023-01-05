@@ -1,7 +1,11 @@
 import { Box, Flex, Grid, Paper, Stack, Title } from '@mantine/core'
 import { IconBasket, IconCards } from '@tabler/icons'
 
-import { StatsGrid, TransactionTable } from '@/components/common'
+import {
+  RecentOrdersTable,
+  StatsGrid,
+  TransactionTable
+} from '@/components/common'
 import { RevenueStatCard, ViewStatBars } from '@/components/common/Cards'
 import { RevenueChart } from '@/components/common/Charts'
 import { viewStats, websiteViewsData } from '@/data/cards'
@@ -39,7 +43,7 @@ function Home() {
         </div>
       </div>
       <Grid>
-        <Grid.Col sm={12} md={6} lg={6}>
+        <Grid.Col sm={12} md={5} lg={5}>
           <Box aria-label="transactions" title="Transactions">
             <Paper p="xs">
               <Flex gap="md" align="center">
@@ -50,7 +54,7 @@ function Home() {
             <TransactionTable />
           </Box>
         </Grid.Col>
-        <Grid.Col sm={12} md={6} lg={6}>
+        <Grid.Col sm={12} md={7} lg={7}>
           <Box h={100}>
             <Paper p="xs">
               <Flex gap="md" align="center">
@@ -58,6 +62,7 @@ function Home() {
                 <IconBasket />
               </Flex>
             </Paper>
+            <RecentOrdersTable />
           </Box>
         </Grid.Col>
       </Grid>

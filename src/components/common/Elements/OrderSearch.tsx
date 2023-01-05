@@ -1,55 +1,79 @@
-import type { MantineColor, SelectItemProps } from '@mantine/core'
-import { Autocomplete, Group, Text } from '@mantine/core'
-import React, { forwardRef } from 'react'
+/* eslint-disable no-underscore-dangle */
+import { Group, Stack, Text, TextInput } from '@mantine/core'
+import { useState } from 'react'
 
 import { server } from '@/utils/server'
 
-interface ItemProps extends SelectItemProps {
-  color: MantineColor
+interface ItemProps {
+  label: string
+  value: string
   description: string
-  image: string
+  name: string
 }
 
 const OrderSearch = () => {
-  const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-    ({ description, value, ...others }: ItemProps, ref) => (
-      <div ref={ref} {...others}>
-        <Group noWrap>
-          <div>
-            <Text>{value}</Text>
-            <Text size="xs" color="dimmed">
-              {description}
-            </Text>
-          </div>
-        </Group>
-      </div>
-    )
-  )
+  const [orderEl, setOrderEl] = useState([])
+  const [orderSearchInput, setOrderSearchInput] = useState('')
   const handleOrderSearch = async (query: string) => {
+    setOrderSearchInput(query)
+    if (!query) {
+      setOrderEl([])
+      return
+    }
+
     const res = await server.get(`/orders/search/${query}`)
-    return res.data
+    const { data } = res
+    if (data.length) {
+      const items = data.map((item: any) => {
+        return {
+          label: item._id,
+          value: item._id,
+          name: `${item.user.firstName} ${item.user.lastName}`,
+          description: item.shippingDetails.note
+        }
+      })
+      setOrderEl(items)
+    }
   }
   return (
-    <Autocomplete
-      styles={(theme) => ({
-        root: {
-          width: 400
-        },
-        input: {
-          color: theme.colors.dark[8]
-        }
-      })}
-      placeholder="Pick one"
-      itemComponent={AutoCompleteItem}
-      onChange={handleOrderSearch}
-      data={[
-        {
-          label: 'Bender Bending Rodríguez',
-          value: 'Blender Blending Rodriguez',
-          description: 'Fascinated with cooking, though has no sense of taste'
-        }
-      ]}
-    />
+    <div className="relative">
+      <TextInput
+        styles={(theme) => ({
+          input: {
+            color: theme.colors.dark[8]
+          }
+        })}
+        value={orderSearchInput}
+        placeholder="Search Order"
+        onChange={(e) => handleOrderSearch(e.target.value)}
+      />
+      {orderEl.length ? (
+        <div className="absolute top-9 z-10 w-full bg-gray-500 p-2">
+          <Stack spacing="xs">
+            {orderEl.map((item: ItemProps) => (
+              <Group
+                className="cursor-pointer"
+                bg="gray"
+                p="sm"
+                key={item.value}
+                noWrap
+                onClick={() => {
+                  setOrderEl([])
+                  setOrderSearchInput(item.name)
+                }}
+              >
+                <div>
+                  <Text>{item.name}</Text>
+                  <Text size="xs" color="dimmed">
+                    {JSON.stringify(item.description)}
+                  </Text>
+                </div>
+              </Group>
+            ))}
+          </Stack>
+        </div>
+      ) : null}
+    </div>
   )
 }
 
