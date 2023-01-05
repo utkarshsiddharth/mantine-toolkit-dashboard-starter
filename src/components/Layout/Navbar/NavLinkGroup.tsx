@@ -85,7 +85,8 @@ export default function LinksGroup({
   return (
     <>
       <UnstyledButton
-        component={Link}
+        // @ts-ignore
+        component={link ? Link : 'a'}
         to={link || ''}
         onClick={() => setOpened((o) => !o)}
         className={classes.control}
