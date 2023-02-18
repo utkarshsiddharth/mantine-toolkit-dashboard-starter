@@ -24,15 +24,16 @@
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",
+    "@reduxjs/toolkit": "^1.9.2",
     "@tabler/icons": "^1.119.0",
     "axios": "^1.2.2",
     "dayjs": "^1.11.7",
-    "flowbite": "^1.5.5",
-    "flowbite-react": "^0.3.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
-    "react-router-dom": "^6.5.0"
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.5.0",
+    "socket.io-client": "^4.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",

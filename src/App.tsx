@@ -2,6 +2,7 @@ import type { ColorScheme } from '@mantine/core'
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/Layout/Layout'
@@ -14,9 +15,17 @@ import {
   ProductAnalytics,
   Users
 } from '@/screens'
+import { socketConnecting } from '@/store/slice/socketSlice'
 import { server } from '@/utils/server'
 
 function App() {
+  // const socket = useSelector<RootState>((state) => state.socket) as InitialState
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(socketConnecting(''))
+  }, [])
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
